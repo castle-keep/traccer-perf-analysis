@@ -1,14 +1,3 @@
-# sim_traccar_osmand.py
-# Usage:
-#   python3 sim_traccar_osmand.py --base-url https://server.sh:8082 --devices 100 --interval 30 --concurrency 1000 --duration 900
-#
-# Notes:
-# - Point at your LB hostname (HTTPS). If you terminate TLS at LB and forward to 5055,
-#   keep the :5055 in the URL (or proxy to /osmand without the port).
-# - Traccar protocol: OsmAnd HTTP GET (supported by Traccar). See: https://www.traccar.org/osmand/
-
-# python3 sim_traccar_osmand.py --base-url http://00.00.000.00:8082 --devices 1000 --interval 10 --concurrency 100 --duration 120 --status-summary --debug --print-failures 10
-
 import asyncio
 import random
 import time
@@ -357,7 +346,7 @@ async def fetch_droplet_bandwidth_kbps(stats, direction:str) -> float:
     - Updates stats['statuses'] with outcome for visibility (bw_skipped, bw_http_<code>, bw_ok, bw_empty, bw_error).
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
         stats["statuses"]["bw_skipped"] += 1
         return float('nan')
@@ -420,7 +409,7 @@ async def fetch_droplet_cpu_usage(stats):
     - Updates stats['statuses'] with outcome for visibility (cpu_skipped, cpu_http_<code>, cpu_ok, cpu_empty, cpu_error).
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     try:
         if not api_key or not droplet_id:
             raise RuntimeError("Missing DO_API_KEY or DO_DROPLET_ID")
@@ -482,7 +471,7 @@ async def fetch_droplet_load(load_minute) -> float:
     Fetch latest load average sample (last 1 minute, 5 minute, or 15 minute) as float.
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
         return float('nan')
     if load_minute not in (1, 5, 15):
@@ -531,7 +520,7 @@ async def fetch_droplet_memory_usage() -> float:
     Both endpoints will return a JSON object with a data field. The data is an array of datapoint objects, each containing a value (in bytes) and a timestamp. 
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
         return float('nan')
     end_time = int(time.time())
@@ -591,7 +580,7 @@ async def fetch_droplet_disk_usage() -> float:
     Both endpoints will return a JSON object with a data field. The data is an array of datapoint objects, each containing a value (in bytes) and a timestamp. 
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
         return float("nan")
     end_time = int(time.time())

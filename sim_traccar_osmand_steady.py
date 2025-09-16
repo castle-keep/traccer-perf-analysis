@@ -1,14 +1,3 @@
-# sim_traccar_osmand.py
-# Usage:
-#   python3 sim_traccar_osmand.py --base-url https://server.sh:8082 --devices 100 --interval 30 --concurrency 1000 --duration 900
-#
-# Notes:
-# - Point at your LB hostname (HTTPS). If you terminate TLS at LB and forward to 5055,
-#   keep the :5055 in the URL (or proxy to /osmand without the port).
-# - Traccar protocol: OsmAnd HTTP GET (supported by Traccar). See: https://www.traccar.org/osmand/
-
-# python3 sim_traccar_osmand.py --base-url http://00.00.000.00:8082 --devices 1000 --interval 10 --concurrency 100 --duration 120 --status-summary --debug --print-failures 10
-
 import asyncio
 import random
 import time
@@ -354,7 +343,7 @@ async def fetch_droplet_bandwidth_kbps(stats, direction:str) -> float:
     - Updates stats['statuses'] with outcome for visibility (bw_skipped, bw_http_<code>, bw_ok, bw_empty, bw_error).
     """
     api_key = os.getenv("DO_API_KEY")
-    droplet_id = os.getenv("DO_DROPLET_ID", "509693610")
+    droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
         stats["statuses"]["bw_skipped"] += 1
         return float('nan')
