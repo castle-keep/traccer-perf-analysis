@@ -1,4 +1,6 @@
 theme: minima
+title: Traccar Performance Analysis
+description: Performance analysis and documentation for hosting Traccar GPS tracking servers on DigitalOcean droplets
 
 markdown: kramdown
 highlighter: rouge

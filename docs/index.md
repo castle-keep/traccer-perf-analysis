@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This paper examines how many GPS trackers (Sinotrack / Eelink, full telemetry every 30 seconds) a self-hosted Traccar server with a PostgreSQL database (on a block storage volume costing ~$10/month) can support on various DigitalOcean droplet tiers, under an 80% CPU load threshold and requiring 99% uptime. Based on online data (benchmarks + community tests) augmented with our scaling model, we identify bottlenecks (especially DB write throughput in PostgreSQL vs. MySQL/TimescaleDB), propose optimal droplet configurations for fleets of 10k, 20k, 50k, 100k devices, and recommend scaling architectures.
+This paper examines how many GPS trackers (Sinotrack / Eelink, full telemetry every 30 seconds) a self-hosted Traccar server with a PostgreSQL database (on a block storage volume costing ~$10/month) can support on various DigitalOcean droplet tiers. Based on data (benchmarks + community tests) augmented with our scaling model, we identify bottlenecks (especially DB write throughput in PostgreSQL vs. MySQL/TimescaleDB), propose optimal droplet configurations for fleets of 10k, 20k, 50k, 100k devices, and recommend scaling architectures.
 
 **Key Findings:**
 

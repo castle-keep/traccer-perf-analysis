@@ -348,8 +348,7 @@ async def fetch_droplet_bandwidth_kbps(stats, direction:str) -> float:
     api_key = os.getenv("DO_API_KEY")
     droplet_id = os.getenv("DO_DROPLET_ID")
     if not api_key or not droplet_id:
-        stats["statuses"]["bw_skipped"] += 1
-        return float('nan')
+        raise RuntimeError("Missing DO_API_KEY or DO_DROPLET_ID")
     end_time = int(time.time())
     start_time = end_time - 60  # last minute window
     print(f"start={start_time}&end={end_time}")
@@ -650,12 +649,11 @@ def parse_args():
     ap.add_argument("--status-summary", action="store_true", help="Show top status codes in progress lines")
     ap.add_argument("--id-prefix", default="000", help="Prefix for device uniqueId (must match devices registered in Traccar)")
     # Ramp mode options
-    ap.add_argument("--ramp", action="store_true", help="Enable ramp (incremental load) mode")
-    ap.add_argument("--devices-start", type=int, default=10000, help="Starting devices (defaults to --devices if omitted)")
-    ap.add_argument("--devices-step", type=int, default=0, help="Increment devices each level")
-    ap.add_argument("--max-devices", type=int, default=30000, help="Maximum devices for ramp")
+    ap.add_argument("--devices-start", type=int, default=5000, help="Starting devices (defaults to --devices if omitted)")
+    ap.add_argument("--devices-step", type=int, default=2500, help="Increment devices each level")
+    ap.add_argument("--max-devices", type=int, default=100000, help="Maximum devices for ramp")
     ap.add_argument("--concurrency-start", type=int, default=1000, help="Starting concurrency (defaults to starting devices)")
-    ap.add_argument("--concurrency-step", type=int, default=0, help="Increment concurrency each level")
+    ap.add_argument("--concurrency-step", type=int, default=1000, help="Increment concurrency each level")
     ap.add_argument("--max-concurrency", type=int, default=10000, help="Maximum concurrency for ramp")
     ap.add_argument("--duration-per-level", type=int, default=30, help="Duration seconds per level")
     ap.add_argument("--failure-threshold", type=float, default=0.5, help="Fail ratio > threshold stops ramp")
@@ -670,10 +668,8 @@ if __name__ == "__main__":
     if not base_url:
         print("Environment variable TRACCAR_BASE_URL is required", file=sys.stderr)
         sys.exit(1)
-    if args.ramp:
-        asyncio.run(ramp_runner(args, base_url))
-    else:
-        asyncio.run(runner(args, base_url))
+    
+    asyncio.run(ramp_runner(args, base_url))
 
 ### test command:
-# python3 ./sim_traccar_osmand_ramp.py --ramp --failure-threshold 1 --status-summary --csv ramp_report_2Gbmem_2vCPU_25Gbssd_3TB_18USD_1.csv
+# python3 ./sim_traccar_osmand_ramp.py --ramp --failure-threshold 1 --status-summary --csv droplet_48USD_reports/report_8Gbmem_4vCPU_25Gbssd_5TB_48USD_1.csv
