@@ -1,4 +1,19 @@
-# Droplet Specifications & Load Testing Data
+# Traccar Performance Analysis
+
+This repository contains performance analysis and documentation for hosting Traccar GPS tracking servers on DigitalOcean droplets.
+
+## 📚 Documentation
+
+The complete documentation is available in the [`/docs`](docs/) directory and is automatically deployed to GitHub Pages.
+
+**[📖 View Documentation Website →](https://castle-keep.github.io/traccer-perf-analysis/)**
+
+### Quick Links
+
+- [Droplet Specifications & Load Testing Data](docs/README.md)
+- [Research Paper: Performance Analysis](docs/Traccar_Performance_Analysis_Research_Paper.md)
+
+## About
 
 This document describes the configuration of the DigitalOcean Droplets used for GPS Tracker load testing with **self-hosted Traccar**.
 
