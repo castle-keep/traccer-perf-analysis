@@ -672,4 +672,4 @@ if __name__ == "__main__":
     asyncio.run(ramp_runner(args, base_url))
 
 ### test command:
-# python3 ./sim_traccar_osmand_ramp.py --ramp --failure-threshold 1 --status-summary --csv droplet_48USD_reports/report_8Gbmem_4vCPU_25Gbssd_5TB_48USD_1.csv
+# python3 ./sim_traccar_osmand_ramp.py --failure-threshold 1 --status-summary --csv reports/droplet_24USD_reports/report_4Gbmem_2vCPU_25Gbssd_4TB_24USD_4.csv
